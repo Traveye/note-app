@@ -3,7 +3,7 @@ const path = require('path');
 const { writeToFile, readAndAppend, readFile } = require('./helpers/fsUtil');
 const shortid = require('shortid');
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 const app = express();
 
