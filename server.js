@@ -45,6 +45,7 @@ app.post('/api/notes', (req, res) => {
   }
 });
 
+//maps id values and splices out the selected id. rewrites file with new content. 
 app.delete('/api/notes/:id', (req, res) => {
     console.log(req.params.id)
     
@@ -66,7 +67,7 @@ app.delete('/api/notes/:id', (req, res) => {
   });
   
 
-
+//wild card redirects to homepage
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/public/index.html'));
 });
