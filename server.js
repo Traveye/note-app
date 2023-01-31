@@ -33,7 +33,7 @@ app.post('/api/notes', (req, res) => {
     const newNote = {
       title,
       text,
-      note_id: shortid.generate()
+      id: shortid.generate()
     };
     console.log(newNote)
 
@@ -44,6 +44,28 @@ app.post('/api/notes', (req, res) => {
     console.log("error")
   }
 });
+
+app.delete('/api/notes/:id', (req, res) => {
+    console.log(req.params.id)
+    
+    readFile('./db/db.json')
+      .then((data) => {
+        const filteredData = JSON.parse(data) // .filter((elem) => elem.id !== id);
+        let index = filteredData.map((note) => {return note.id}).indexOf(req.params.id);
+        filteredData.splice(index, 1);
+        console.log(index)
+        return writeToFile('./db/db.json', filteredData);
+      })
+      .then(() => {
+        res.json({ message: 'Note deleted successfully' });
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).json({ message: 'Error deleting note' });
+      });
+  });
+  
+
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/public/index.html'));
